@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parben Consulting · Finanzas para empresas</title>
+<meta name="description" content="Consultoría en finanzas corporativas y valoración de empresas. Modelos de valoración (DCF, múltiplos, transacciones) y modelado financiero con estándares de banca de inversión para compañías de cualquier tamaño.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Archivo:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0C1116;
+  --ink-2:#141C24;
+  --bone:#F2EFE9;
+  --bone-2:#E4DFD5;
+  --brass:#B4894E;
+  --brass-soft:#D9BC8C;
+  --slate:#6B7681;
+  --rule:rgba(12,17,22,.14);
+  --rule-dark:rgba(242,239,233,.16);
+  --serif:"Instrument Serif", Georgia, serif;
+  --sans:"Archivo", "Helvetica Neue", sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bone);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-weight:300;
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+/* ---------- grano ---------- */
+body::after{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap{max-width:1240px;margin:0 auto;padding:0 40px}
+.eyebrow{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;
+  color:var(--brass);display:flex;align-items:center;gap:14px;
+}
+.eyebrow::before{content:"";width:28px;height:1px;background:var(--brass);display:block}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.06;letter-spacing:-.015em}
+h2{font-size:clamp(2.4rem,4.6vw,4rem)}
+h3{font-size:1.6rem;letter-spacing:-.01em}
+p{max-width:62ch}
+
+/* ---------- header ---------- */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  transition:background .5s var(--ease),border-color .5s var(--ease),padding .5s var(--ease);
+  border-bottom:1px solid transparent;padding:26px 0;
+}
+header.solid{background:rgba(12,17,22,.88);backdrop-filter:blur(14px);border-color:var(--rule-dark);padding:16px 0}
+.nav{display:flex;align-items:center;justify-content:space-between}
+.brand{font-family:var(--serif);font-size:1.5rem;color:var(--bone);letter-spacing:.01em;text-decoration:none;display:flex;align-items:baseline;gap:10px}
+.brand span{font-family:var(--sans);font-size:9.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--brass-soft);font-weight:500}
+.menu{display:flex;gap:38px;align-items:center;list-style:none}
+.menu a{
+  color:rgba(242,239,233,.72);text-decoration:none;font-size:12.5px;letter-spacing:.13em;
+  text-transform:uppercase;font-weight:400;position:relative;padding-bottom:3px;transition:color .3s
+}
+.menu a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--brass);transition:width .4s var(--ease)}
+.menu a:hover{color:var(--bone)}
+.menu a:hover::after{width:100%}
+.cta-nav{border:1px solid var(--rule-dark);padding:11px 22px!important;color:var(--bone)!important}
+.cta-nav::after{display:none}
+.cta-nav:hover{background:var(--brass);border-color:var(--brass);color:var(--ink)!important}
+.burger{display:none;background:none;border:0;cursor:pointer;flex-direction:column;gap:5px;padding:6px}
+.burger i{display:block;width:26px;height:1.5px;background:var(--bone);transition:.3s}
+
+/* ---------- hero ---------- */
+.hero{
+  background:var(--ink);color:var(--bone);min-height:100svh;display:flex;align-items:flex-end;
+  padding:160px 0 60px;position:relative;overflow:hidden;
+}
+.hero::before{
+  content:"";position:absolute;top:-25%;right:-15%;width:70vw;height:70vw;border-radius:50%;
+  background:radial-gradient(circle,rgba(180,137,78,.16) 0%,rgba(180,137,78,0) 62%);
+  animation:drift 22s ease-in-out infinite alternate;
+}
+@keyframes drift{to{transform:translate(-6%,7%) scale(1.12)}}
+.hero-grid{position:relative;z-index:2;display:block;max-width:1000px;margin-right:auto}
+.hero h1{font-size:clamp(3.2rem,7.6vw,7rem);color:var(--bone)}
+.hero h1 em{font-style:italic;color:var(--brass-soft)}
+.hero-sub{margin-top:34px;font-size:1.05rem;color:rgba(242,239,233,.66);max-width:52ch}
+.hero-aside{border-left:1px solid var(--rule-dark);padding-left:28px}
+.hero-aside p{font-size:13.5px;color:rgba(242,239,233,.55);letter-spacing:.01em}
+.hero-actions{display:flex;gap:16px;margin-top:44px;flex-wrap:wrap}
+.btn{
+  display:inline-block;padding:16px 34px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  text-decoration:none;font-weight:500;transition:.35s var(--ease);border:1px solid;
+}
+.btn-solid{background:var(--brass);border-color:var(--brass);color:var(--ink)}
+.btn-solid:hover{background:transparent;color:var(--brass-soft);border-color:var(--brass-soft)}
+.btn-ghost{background:transparent;border-color:var(--rule-dark);color:var(--bone)}
+.btn-ghost:hover{border-color:var(--bone);background:rgba(242,239,233,.06)}
+.scroll-hint{
+  position:absolute;bottom:38px;right:40px;z-index:3;font-size:10.5px;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(242,239,233,.4);writing-mode:vertical-rl;display:flex;
+  align-items:center;gap:12px;
+}
+.scroll-hint::after{content:"";width:1px;height:52px;background:linear-gradient(var(--brass),transparent);animation:pulse 2.4s infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* ---------- métricas ---------- */
+.metrics{background:var(--ink-2);color:var(--bone);border-top:1px solid var(--rule-dark);padding:96px 0}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule-dark)}
+.metric{background:var(--ink-2);padding:8px 30px}
+.metric:first-child{padding-left:0}
+.metric .num{font-family:var(--serif);font-size:clamp(2.6rem,4.4vw,3.6rem);color:var(--brass-soft);line-height:1}
+.metric .lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,239,233,.5);margin-top:12px}
+
+/* preguntas del dueño */
+.q-head{margin-bottom:48px}
+.q-head h2{font-size:clamp(2rem,3.8vw,3.2rem)}
+.q-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule-dark);border:1px solid var(--rule-dark)}
+.q-card{
+  background:var(--ink-2);padding:34px 30px;display:flex;gap:18px;align-items:flex-start;
+  transition:background .4s var(--ease);
+}
+.q-card:hover{background:var(--ink)}
+.q-mark{
+  font-family:var(--serif);font-size:2rem;line-height:.9;color:var(--brass-soft);
+  flex-shrink:0;transition:color .4s;
+}
+.q-card:hover .q-mark{color:var(--brass)}
+.q-card p{font-size:1.05rem;line-height:1.4;color:rgba(242,239,233,.82);max-width:none}
+
+/* ---------- secciones ---------- */
+section{padding:130px 0}
+.sec-head{display:grid;grid-template-columns:180px 1fr;gap:50px;margin-bottom:80px;align-items:start}
+.sec-idx{font-family:var(--serif);font-size:1rem;color:var(--slate);border-top:1px solid var(--rule);padding-top:14px}
+.sec-head .lead{margin-top:26px;font-size:1.05rem;color:#3C464F}
+
+/* servicios */
+.svc{border-top:1px solid var(--rule)}
+.svc-row{
+  display:grid;grid-template-columns:70px 1fr 1.15fr;gap:40px;padding:42px 0;
+  border-bottom:1px solid var(--rule);position:relative;transition:.45s var(--ease);
+}
+.svc-row::before{content:"";position:absolute;inset:0 -28px;background:var(--ink);z-index:-1;opacity:0;transition:.45s var(--ease)}
+.svc-row:hover::before{opacity:1}
+.svc-row:hover{color:var(--bone);padding-left:28px;padding-right:28px}
+.svc-row:hover .svc-n{color:var(--brass-soft)}
+.svc-row:hover .svc-d{color:rgba(242,239,233,.62)}
+.svc-n{font-family:var(--serif);font-size:1.05rem;color:var(--slate);transition:.45s}
+.svc-t{font-family:var(--serif);font-size:1.9rem;line-height:1.15}
+.svc-d{font-size:14.5px;color:#4A555F;transition:.45s;max-width:46ch}
+
+/* servicios · tarjetas compactas */
+.svc-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.svc-card{
+  background:var(--bone);padding:34px 30px 38px;position:relative;
+  transition:background .4s var(--ease),color .4s var(--ease);
+}
+.svc-card::after{content:"";position:absolute;left:30px;top:0;width:34px;height:2px;background:var(--brass);transition:width .4s var(--ease)}
+.svc-card:hover{background:var(--ink);color:var(--bone)}
+.svc-card:hover::after{width:64px}
+.svc-card:hover .sc-n{color:var(--brass-soft)}
+.svc-card:hover .sc-t{color:var(--bone)}
+.svc-card:hover .sc-d{color:rgba(242,239,233,.66)}
+.sc-n{font-family:var(--serif);font-size:1rem;color:var(--slate);margin-bottom:16px;transition:.4s}
+.sc-t{font-family:var(--serif);font-size:1.5rem;line-height:1.16;margin-bottom:14px;transition:.4s}
+.sc-d{font-size:13.5px;line-height:1.6;color:#4A555F;transition:.4s}
+
+/* badge inglés (sección extranjeros) */
+.en-badge{
+  display:inline-flex;align-items:center;gap:12px;margin-top:26px;
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#3C464F;
+  border:1px solid var(--rule);padding:10px 18px;
+}
+.en-badge span{
+  font-family:var(--serif);font-size:1.15rem;letter-spacing:0;text-transform:none;
+  color:var(--brass);line-height:1;
+}
+
+/* enfoque */
+.approach{background:var(--ink);color:var(--bone)}
+.approach .sec-idx{color:rgba(242,239,233,.42);border-color:var(--rule-dark)}
+.approach .lead{color:rgba(242,239,233,.62)}
+.steps{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:42px;
+  position:relative;padding-top:52px;
+}
+/* línea horizontal del timeline */
+.steps::before{
+  content:"";position:absolute;top:8px;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,var(--brass) 0%,var(--brass-soft) 100%);
+  opacity:.5;
+}
+.step{position:relative;padding-top:0;padding-left:22px}
+/* nodo sobre la línea */
+.step::before{
+  content:"";position:absolute;top:8px;left:0;
+  width:11px;height:11px;border-radius:50%;
+  background:var(--ink);border:1.5px solid var(--brass);
+  margin-top:-5px;transition:.4s var(--ease);
+}
+.step:hover::before{background:var(--brass);box-shadow:0 0 0 5px rgba(180,137,78,.18)}
+.step .s-n{font-size:11px;letter-spacing:.2em;color:var(--brass);margin-bottom:16px}
+.step h3{color:var(--bone);font-size:1.35rem;margin-bottom:12px}
+.step p{font-size:14px;color:rgba(242,239,233,.55)}
+
+/* perfil */
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px}
+.member{border-top:1px solid var(--rule);padding-top:34px}
+.member .role{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--brass);margin-bottom:18px}
+.member h3{font-size:2.1rem;margin-bottom:18px}
+.member p{font-size:15px;color:#404A54;margin-bottom:22px}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;border:1px solid var(--rule);padding:7px 13px;color:var(--slate)}
+
+/* cita */
+.quote{background:var(--bone-2);padding:110px 0}
+.quote blockquote{
+  font-family:var(--serif);font-size:clamp(1.9rem,3.6vw,3rem);line-height:1.24;max-width:22ch;
+  letter-spacing:-.015em;
+}
+.quote blockquote em{font-style:italic;color:var(--brass)}
+.quote-grid{display:grid;grid-template-columns:1fr 340px;gap:70px;align-items:end}
+.quote-side{font-size:14.5px;color:#4A555F;border-left:1px solid var(--rule);padding-left:26px}
+
+/* contacto */
+.contact{background:var(--ink);color:var(--bone)}
+.contact .sec-idx{color:rgba(242,239,233,.42);border-color:var(--rule-dark)}
+.contact h2{color:var(--bone)}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.field{margin-bottom:26px}
+.field label{display:block;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:rgba(242,239,233,.45);margin-bottom:10px}
+.field input,.field textarea{
+  width:100%;background:transparent;border:0;border-bottom:1px solid var(--rule-dark);
+  color:var(--bone);font-family:var(--sans);font-size:15px;font-weight:300;padding:10px 0;
+  transition:border-color .35s;resize:none;
+}
+.field input:focus,.field textarea:focus{outline:0;border-color:var(--brass)}
+.field input::placeholder,.field textarea::placeholder{color:rgba(242,239,233,.25)}
+.info-block{margin-bottom:38px}
+.info-block .k{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass);margin-bottom:9px}
+.info-block .v{font-size:1.15rem;font-family:var(--serif)}
+.info-block a{color:var(--bone);text-decoration:none;border-bottom:1px solid var(--rule-dark);transition:border-color .3s}
+.info-block a:hover{border-color:var(--brass)}
+
+/* footer */
+footer{background:var(--ink);color:rgba(242,239,233,.42);border-top:1px solid var(--rule-dark);padding:40px 0;font-size:12px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;letter-spacing:.06em}
+.foot a{color:rgba(242,239,233,.42);text-decoration:none}
+.foot a:hover{color:var(--brass-soft)}
+
+/* ---------- animación ---------- */
+.rev{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rev.in{opacity:1;transform:none}
+.hero .rev{transform:translateY(38px)}
+[data-d="1"]{transition-delay:.1s}[data-d="2"]{transition-delay:.2s}
+[data-d="3"]{transition-delay:.3s}[data-d="4"]{transition-delay:.4s}
+[data-d="5"]{transition-delay:.5s}[data-d="6"]{transition-delay:.6s}
+
+/* ---------- responsive ---------- */
+@media(max-width:1020px){
+  .hero-grid,.quote-grid,.contact-grid,.team-grid{grid-template-columns:1fr;gap:44px}
+  .hero-aside{border-left:0;border-top:1px solid var(--rule-dark);padding:24px 0 0}
+  .steps,.metrics-grid{grid-template-columns:1fr 1fr}
+  .svc-cards{grid-template-columns:1fr 1fr}
+  .q-grid{grid-template-columns:1fr 1fr}
+  .metric{padding:22px 24px}
+  .metric:first-child{padding-left:24px}
+  .sec-head{grid-template-columns:1fr;gap:18px}
+  .quote-side{border-left:0;border-top:1px solid var(--rule);padding:22px 0 0}
+}
+@media(max-width:720px){
+  .wrap{padding:0 22px}
+  .menu{
+    position:fixed;inset:0;background:var(--ink);flex-direction:column;justify-content:center;
+    gap:30px;transform:translateX(100%);transition:transform .55s var(--ease);
+  }
+  .menu.open{transform:none}
+  .menu a{font-size:16px}
+  .burger{display:flex;z-index:120}
+  section{padding:90px 0}
+  .svc-row{grid-template-columns:1fr;gap:14px;padding:32px 0}
+  .svc-row:hover{padding-left:0;padding-right:0}
+  .svc-row::before{inset:0 -22px}
+  .steps,.metrics-grid{grid-template-columns:1fr}
+  .svc-cards{grid-template-columns:1fr}
+  .q-grid{grid-template-columns:1fr}
+  /* timeline vertical en móvil */
+  .steps{padding-top:0;padding-left:26px;gap:34px}
+  .steps::before{top:6px;bottom:6px;left:5px;right:auto;width:1px;height:auto;
+    background:linear-gradient(180deg,var(--brass) 0%,var(--brass-soft) 100%)}
+  .step::before{top:6px;left:-26px}
+  .scroll-hint{display:none}
+  .hero{padding:130px 0 70px}
+}
+</style>
+</head>
+<body>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a href="#" class="brand">Parben <span>Consulting</span></a>
+    <button class="burger" id="burger" aria-label="Menú"><i></i><i></i><i></i></button>
+    <ul class="menu" id="menu">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#enfoque">Enfoque</a></li>
+      <li><a href="#extranjeros">Extranjeros</a></li>
+      <li><a href="#contacto" class="cta-nav">Agendar reunión</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow rev">Finanzas corporativas y valoración · Paraguay</div>
+        <h1 class="rev" data-d="1" style="margin-top:30px">
+          Finanzas que<br><em>sostienen</em><br>tus decisiones.
+        </h1>
+        <p class="hero-sub rev" data-d="2">
+          Asesoramos a compañías de cualquier tamaño en finanzas corporativas y
+          valoración de empresas. Modelos de valoración y proyecciones financieras
+          construidos con estándares de banca de inversión, para sostener cada
+          decisión ante inversores, directorios y contrapartes.
+        </p>
+        <div class="hero-actions rev" data-d="3">
+          <a href="#contacto" class="btn btn-solid">Conversemos</a>
+          <a href="#servicios" class="btn btn-ghost">Ver servicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint">Desplazar</div>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios" style="padding-top:110px;padding-bottom:110px">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:52px">
+      <div class="sec-idx rev">01 / Servicios</div>
+      <div>
+        <h2 class="rev">Qué hacemos.</h2>
+        <p class="lead rev" data-d="1">
+          Trabajo de alto valor, con alcance definido y entregables auditables.
+        </p>
+      </div>
+    </div>
+
+    <div class="svc-cards">
+      <div class="svc-card rev">
+        <div class="sc-n">01</div>
+        <div class="sc-t">Finanzas Corporativas</div>
+        <div class="sc-d">Estructura de capital, evaluación de inversiones y políticas financieras para decisiones de crecimiento, deuda o socios. También acompañamos a emprendedores: cómo estructurar el negocio, cuánto capital necesitan y cómo presentarlo a un inversor.</div>
+      </div>
+      <div class="svc-card rev" data-d="1">
+        <div class="sc-n">02</div>
+        <div class="sc-t">Valoración de Empresas</div>
+        <div class="sc-d">DCF, múltiplos comparables y transacciones precedentes. Informes defendibles ante inversores, directorios y contrapartes.</div>
+      </div>
+      <div class="svc-card rev" data-d="2">
+        <div class="sc-n">03</div>
+        <div class="sc-t">Modelado Financiero</div>
+        <div class="sc-d">Modelos de tres estados, proyecciones, escenarios y sensibilidad. Auditables y con estándares de banca de inversión.</div>
+      </div>
+      <div class="svc-card rev" data-d="3">
+        <div class="sc-n">04</div>
+        <div class="sc-t">Levantamiento de Capital</div>
+        <div class="sc-d">Preparación del caso financiero para bancos, inversores o fondos: valoración, proyecciones y narrativa de respaldo.</div>
+      </div>
+      <div class="svc-card rev" data-d="4">
+        <div class="sc-n">05</div>
+        <div class="sc-t">Evaluación y Validación de Ideas</div>
+        <div class="sc-d">Estimamos el retorno de un proyecto o validamos financieramente una idea antes de comprometer capital: TIR, VAN, payback.</div>
+      </div>
+      <div class="svc-card rev" data-d="5">
+        <div class="sc-n">06</div>
+        <div class="sc-t">Inversión Extranjera</div>
+        <div class="sc-d">Acompañamos a inversores del exterior con proyectos en Paraguay, 100% en inglés. Más detalle abajo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREGUNTAS -->
+<div class="metrics">
+  <div class="wrap">
+    <div class="q-head rev">
+      <div class="eyebrow">Preguntas que respondemos</div>
+      <h2 style="color:var(--bone);margin-top:22px">¿Con cuál te<br>identificás?</h2>
+    </div>
+    <div class="q-grid">
+      <div class="q-card rev"><span class="q-mark">?</span><p>¿Cuánto vale mi empresa hoy?</p></div>
+      <div class="q-card rev" data-d="1"><span class="q-mark">?</span><p>¿Cuánto vale la participación si entra o sale un socio?</p></div>
+      <div class="q-card rev" data-d="2"><span class="q-mark">?</span><p>¿Cuánta deuda puedo levantar?</p></div>
+      <div class="q-card rev" data-d="3"><span class="q-mark">?</span><p>¿Cómo preparo el caso para un banco o un fondo?</p></div>
+      <div class="q-card rev" data-d="4"><span class="q-mark">?</span><p>Quiero crecer: ¿qué puedo mejorar según mis estados financieros?</p></div>
+      <div class="q-card rev" data-d="5"><span class="q-mark">?</span><p>Quiero hacer un proyecto dentro de mi empresa: ¿cómo queda?</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ENFOQUE -->
+<section class="approach" id="enfoque">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-idx rev">02 / Enfoque</div>
+      <div>
+        <h2 class="rev" style="color:var(--bone)">Nuestro proceso</h2>
+        <p class="lead rev" data-d="1">
+          Metodología estructurada en cuatro etapas, con entregables definidos y
+          comunicación permanente durante todo el proyecto.
+        </p>
+      </div>
+    </div>
+    <div class="steps">
+      <div class="step rev"><div class="s-n">Etapa 01</div><h3>Diagnóstico</h3><p>Entendemos el negocio, los objetivos de los dueños y las restricciones reales, y presupuestamos juntos el caso antes de proponer un camino.</p></div>
+      <div class="step rev" data-d="1"><div class="s-n">Etapa 02</div><h3>Análisis</h3><p>Construimos el modelo, la valoración y los escenarios. Definimos rango de valor y las palancas del negocio.</p></div>
+      <div class="step rev" data-d="2"><div class="s-n">Etapa 03</div><h3>Entrega</h3><p>Preparamos el informe y los materiales, y explicamos cada supuesto para que puedas defenderlo ante un tercero.</p></div>
+      <div class="step rev" data-d="3"><div class="s-n">Etapa 04</div><h3>Ajustes</h3><p>Una sesión de ajustes en caso de ser necesario, para refinar supuestos o adaptar el modelo a nueva información.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EXTRANJEROS -->
+<section id="extranjeros" style="background:var(--bone-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-idx rev">03 / Inversión extranjera</div>
+      <div>
+        <h2 class="rev">¿Invertir o emprender<br>en Paraguay desde afuera?</h2>
+        <p class="lead rev" data-d="1">
+          Acompañamos a inversores y empresas del exterior que evalúan invertir o
+          instalar un proyecto en Paraguay, tanto para expandir un negocio existente
+          como para iniciar una empresa o proyecto desde cero. Con formación en Estados
+          Unidos y Europa, trabajamos 100% en inglés y traducimos la oportunidad a los
+          números que necesitás para decidir. Al ser locales, aportamos el conocimiento
+          del terreno y la red de contactos que un proyecto necesita.
+        </p>
+        <div class="en-badge rev" data-d="2"><span>EN</span> Trabajamos 100% en inglés</div>
+      </div>
+    </div>
+    <div class="svc">
+      <div class="svc-row rev">
+        <div class="svc-n">01</div>
+        <div class="svc-t">Evaluación de Retorno del Proyecto</div>
+        <div class="svc-d">Modelamos el retorno esperado de tu inversión en Paraguay —TIR, VAN, payback y escenarios— con supuestos locales realistas de costos, impuestos y mercado.</div>
+      </div>
+      <div class="svc-row rev">
+        <div class="svc-n">02</div>
+        <div class="svc-t">Validación Financiera de la Idea</div>
+        <div class="svc-d">Antes de comprometer capital, verificamos si el negocio cierra: estructura de costos, márgenes, punto de equilibrio y sensibilidad a los riesgos del proyecto.</div>
+      </div>
+      <div class="svc-row rev">
+        <div class="svc-n">03</div>
+        <div class="svc-t">Contexto Financiero Local</div>
+        <div class="svc-d">Traducimos el entorno paraguayo —marco de negocios, financiamiento y prácticas de mercado— para inversores extranjeros, en inglés y con estándares internacionales.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CITA -->
+<div class="quote">
+  <div class="wrap quote-grid">
+    <blockquote class="rev">El valor no se <em>declara</em>. Se demuestra.</blockquote>
+    <div class="quote-side rev" data-d="1">
+      Una buena decisión de capital empieza por un número que se sostiene.
+      Nuestro trabajo es construir la valoración y el modelo financiero que respaldan
+      esa decisión, con el rigor técnico que un inversor, un directorio o una
+      contraparte esperan ver.
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTO -->
+<section class="contact" id="contacto">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="sec-idx rev">04 / Contacto</div>
+      <div>
+        <h2 class="rev">Primera conversación,<br>sin costo.</h2>
+        <p class="lead rev" data-d="1" style="color:rgba(242,239,233,.62)">
+          Contanos brevemente la situación de tu empresa. Respondemos en un plazo de 24 horas hábiles.
+        </p>
+      </div>
+    </div>
+    <div class="contact-grid">
+      <div class="rev">
+        <div class="field"><label for="n">Nombre y apellido</label><input id="n" type="text" placeholder="Su nombre"></div>
+        <div class="field"><label for="e">Correo electrónico</label><input id="e" type="email" placeholder="nombre@empresa.com"></div>
+        <div class="field"><label for="c">Empresa</label><input id="c" type="text" placeholder="Razón social"></div>
+        <div class="field"><label for="m">Mensaje</label><textarea id="m" rows="3" placeholder="Situación y objetivo"></textarea></div>
+        <a href="#" class="btn btn-solid" id="send">Enviar consulta</a>
+      </div>
+      <div class="rev" data-d="1">
+        <div class="info-block"><div class="k">Correo</div><div class="v"><a href="mailto:contacto@parbenconsulting.com">contacto@parbenconsulting.com</a></div></div>
+        <div class="info-block"><div class="k">Teléfono</div><div class="v"><a href="tel:+595986989353">+595 986 989 353</a></div></div>
+        <div class="info-block"><div class="k">Ubicación</div><div class="v">Asunción, Paraguay</div></div>
+        <div class="info-block"><div class="k">LinkedIn</div><div class="v"><a href="#" target="_blank" rel="noopener">Parben Consulting</a></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div>© <span id="yr"></span> Parben Consulting. Todos los derechos reservados.</div>
+    <div>Finanzas para empresas · Asunción, Paraguay</div>
+  </div>
+</footer>
+
+<script>
+// header sólido al hacer scroll
+const hdr = document.getElementById('hdr');
+addEventListener('scroll', () => hdr.classList.toggle('solid', scrollY > 40));
+
+// menú mobile
+const burger = document.getElementById('burger'), menu = document.getElementById('menu');
+burger.addEventListener('click', () => menu.classList.toggle('open'));
+menu.addEventListener('click', e => { if (e.target.tagName === 'A') menu.classList.remove('open'); });
+
+// reveals
+const io = new IntersectionObserver(es => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('.rev').forEach(el => io.observe(el));
+
+// hero al cargar
+addEventListener('load', () => document.querySelectorAll('.hero .rev').forEach(el => el.classList.add('in')));
+
+// envío por mailto (reemplazar por backend o Formspree cuando esté el dominio)
+document.getElementById('send').addEventListener('click', ev => {
+  ev.preventDefault();
+  const v = id => encodeURIComponent(document.getElementById(id).value || '');
+  location.href = `mailto:contacto@parbenconsulting.com?subject=Consulta%20web%20-%20${v('c')}&body=Nombre:%20${v('n')}%0AEmail:%20${v('e')}%0AEmpresa:%20${v('c')}%0A%0A${v('m')}`;
+});
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
